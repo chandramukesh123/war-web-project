@@ -6,6 +6,10 @@
   <packaging>war</packaging>
   <name>WAR Web Project</name>
   <description>A very simple Maven-enabled WAR web project</description>
+  <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
   <dependencies>
   	<dependency>
   		<groupId>com.google.code.gson</groupId>
@@ -34,7 +38,7 @@
           <source>7</source>
           <target>7</target>
         </configuration>
-      </plugin>
+        </plugin>
     </plugins>
   </build>
 </project>
