@@ -24,3 +24,10 @@ steps:
     effectivePomSkip: false
     sonarQubeRunAnalysis: false
     goals: 'package'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: 'C:\agent\_work\1\s\target'
+    Contents: '*.war'
+    TargetFolder: 'D:\jboss-eap-7.4.0.Beta\jboss-eap-7.4\standalone\deployments'
+    preserveTimestamp: true
