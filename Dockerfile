@@ -1,5 +1,5 @@
 # Use the latest Tomcat image from Docker Hub
-FROM tomcat:latest
+FROM public.ecr.aws/lts/tomcat:latest
 
 # Install awscli to interact with AWS services
 RUN apt-get update && \
