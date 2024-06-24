@@ -3,7 +3,7 @@ FROM tomcat:latest
 
 # Install awscli to interact with AWS services
 #RUN apt-get update && \
-    apt-get install -y awscli
+#apt-get install -y awscli
 
 # Set environment variables for AWS credentials (replace with your AWS credentials or use IAM roles)
 #ENV AWS_ACCESS_KEY_ID=fghj
