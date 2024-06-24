@@ -6,9 +6,9 @@ RUN apt-get update && \
     apt-get install -y awscli
 
 # Set environment variables for AWS credentials (replace with your AWS credentials or use IAM roles)
-#ENV AWS_ACCESS_KEY_ID=fghj
-#ENV AWS_SECRET_ACCESS_KEY=+QwulMJeKlR52Xuusg8uqWhgfg
-#ENV AWS_DEFAULT_REGION=us-east-1
+ENV AWS_ACCESS_KEY_ID=AKIAXYKJS5VYC2CPADXJ
+ENV AWS_SECRET_ACCESS_KEY=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
+ENV AWS_DEFAULT_REGION=us-east-1
 
 # Create directory to store WAR file
 RUN mkdir -p /usr/local/tomcat/webapps/myapp
