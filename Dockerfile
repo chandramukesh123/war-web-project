@@ -6,8 +6,8 @@ RUN apt-get update && \
     apt-get install -y awscli
 
 # Set environment variables for AWS credentials (replace with your AWS credentials or use IAM roles)
-ENV AWS_ACCESS_KEY_ID=AKIAXYKJS5VYC2CPADXJ
-ENV AWS_SECRET_ACCESS_KEY=+QwulMJeKlR52Xuusg8uqWEXc2egLlITdrVRNenq
+ENV AWS_ACCESS_KEY_ID=
+ENV AWS_SECRET_ACCESS_KEY=
 ENV AWS_DEFAULT_REGION=us-east-1
 
 # Create directory to store WAR file
