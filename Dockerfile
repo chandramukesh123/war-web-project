@@ -1,13 +1,17 @@
 # Use the latest Tomcat image from Docker Hub
-FROM public.ecr.aws/lts/tomcat:latest
+FROM tomcat8:latest
+
+# Arguments passed from buildspec.yml
+ARG AWS_ACCESS_KEY_ID
+ARG AWS_SECRET_ACCESS_KEY
 
 # Install awscli to interact with AWS services
 RUN apt-get update && \
     apt-get install -y awscli
 
 # Set environment variables for AWS credentials (replace with your AWS credentials or use IAM roles)
-ENV AWS_ACCESS_KEY_ID=
-ENV AWS_SECRET_ACCESS_KEY=
+ENV AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+ENV AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
 ENV AWS_DEFAULT_REGION=us-east-1
 
 # Create directory to store WAR file
