@@ -1,5 +1,6 @@
 # Use the latest Tomcat image from Docker Hub
-FROM mukesh243/tomcat:latest
+FROM docker:latest
+RUN apk update && apk add --no-cache curl
 
 # Arguments passed from buildspec.yml
 ARG AWS_ACCESS_KEY_ID
@@ -13,6 +14,13 @@ RUN apt-get update && \
 ENV AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
 ENV AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
 ENV AWS_DEFAULT_REGION=us-east-1
+# Set environment variables for Docker Hub credentials
+ENV DOCKER_HUB_USER=mukesh243
+ENV DOCKER_HUB_PASSWORD=243@mukesh
+
+RUN echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER" --password-stdin
+
+RUN docker pull mukesh243/tomcat:latest
 
 # Create directory to store WAR file
 RUN mkdir -p /usr/local/tomcat/webapps/myapp
