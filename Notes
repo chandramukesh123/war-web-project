@@ -1,0 +1,25 @@
+I want to build a java application using AWS CodeBuild
+The steps and issues i faced during this i am noting down here
+
+1. In project configuration tab, we need to give the project name of our wish
+2. In source tab, we need to give code repository details Gitlab, GitHub etc.
+3. There we need to integrate with GitHub with CodeBuild first.
+4. Then we need to give GitHub repository url of the project and branch details.
+5. we can configure webhook to trigger build whenever Dev team push the code(optional).
+6. In environment tab, we can give where we want to build our code like ec2 or lambda and os details..
+7. In Buildspec tab, we can give build commands directly or we can use buildspec from git aswell.
+
+8. Here i want to build the code using maven and after generating war file, i want build docker image using Dockerfile.
+9. we can store the war file in s3, for that i created s3 bucket, given details in configuration.
+10. since we are using ec2 in the background, we need to install aws cli to connect aws services and configure aws access and secret key.
+11. we should not give access and secret keys directly, so i have stored these in parameter store and same mentioned in the Buildspec.yml file.
+12. while building docker file, i faced some issues as follows.
+we no need to install docker to build docker images in codebuild, CodeBuild uses in built docker software to build images.
+while pull the docker image, CodeBuild not allowed multiple times to pull the image, so i created one repository in my dockerhub account and written in Dockerfile to pull the image from my personal dockerhub account.
+
+Although we configured aws keys in Buildspec file, we need to mention in the Dockerfile aswell since CodeBuild is using inside container..This is to copy war file from S3 bucket to tomacat folder.
+for that in docker build command, i used --build-arg option to pass keys as variables and mentioned key variables i written in Dockerfile as ARG parameters and set environment variables.
+
+13. After that we need to give ecr login details to login ecr account.
+14. After logging, we need to tag the docker build and push to ECR repository.
+
