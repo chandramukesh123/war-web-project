@@ -1,5 +1,5 @@
 # Use the latest Tomcat image from Docker Hub
-FROM tomcat8:latest
+FROM mukesh243/tomcat:latest
 
 # Arguments passed from buildspec.yml
 ARG AWS_ACCESS_KEY_ID
