@@ -1,0 +1,49 @@
+version: 0.2
+
+env:
+  parameter-store:
+    AWS_ACCESS_KEY_ID: "/my-java-app/aws-key/accesskey"
+    AWS_SECRET_ACCESS_KEY: "/my-java-app/aws-key/secretkey"
+    
+  variables:
+    AWS_ACCOUNT_ID: "533267148144"
+    IMAGE_REPO_NAME: "mukesh-images"  
+    IMAGE_TAG: "tomlatest"   
+    AWS_DEFAULT_REGION: "us-east-1"
+
+phases:
+  install:
+    commands:
+      - echo installing jre and maven
+      - apt-get update && apt-get install default-jre -y
+      - apt-get update && apt-get install maven -y
+      - echo java version is `java --version`
+      - apt-get update
+      - apt-get install -y awscli
+      - echo Configuring AWS CLI...
+      - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+      - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+      - aws configure set region $AWS_DEFAULT_REGION
+      - aws configure list
+  build:
+    commands:
+      - echo "Building Java project"
+      - mvn clean package
+      - echo "building docker image"
+      - docker build 
+          -t my-java-app 
+          --build-arg AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" 
+          --build-arg AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY" .
+      - echo "Logging into Amazon ECR"
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - echo "Tagging Docker image with ECR repository URI..."
+      - docker tag my-java-app $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:my-java-app
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:my-java-app
+                     
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      
+artifacts:
+  files:
+    - target/*.war
